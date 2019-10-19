@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace RDJTPService
+namespace RDJTP.Core
 {
     public class Category
     {

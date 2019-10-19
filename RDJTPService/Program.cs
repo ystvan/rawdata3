@@ -15,7 +15,6 @@ namespace RDJTPService
             Console.WriteLine($"Server is starting...!\n");
             var server = new Server();
             server.Start();
-
         }
     }
 }

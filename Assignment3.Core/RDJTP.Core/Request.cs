@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RDJTPClient
+namespace RDJTP.Core
 {
     public class Request
     {

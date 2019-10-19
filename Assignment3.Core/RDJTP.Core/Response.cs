@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RDJTPService
+namespace RDJTP.Core
 {
     public class Response
     {
