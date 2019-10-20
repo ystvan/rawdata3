@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Assignment3.Core\RDJTP.Core\RDJTP.Core.csproj" />
+    <ProjectReference Include="..\RDJTP.Core\RDJTP.Core.csproj" />
   </ItemGroup>
 
 </Project>

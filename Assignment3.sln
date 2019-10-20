@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RDJTPService", "RDJTPServic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RDJTPClient", "RDJTPClient\RDJTPClient.csproj", "{760D5B7B-0248-457F-B171-8CF714D85EA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDJTP.Core", "Assignment3.Core\RDJTP.Core\RDJTP.Core.csproj", "{A26771B4-77FB-456F-9A21-98F7F60FA57D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RDJTP.Core", "RDJTP.Core\RDJTP.Core.csproj", "{90F57332-2B7F-47D0-8A41-436447F9337F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{760D5B7B-0248-457F-B171-8CF714D85EA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{760D5B7B-0248-457F-B171-8CF714D85EA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{760D5B7B-0248-457F-B171-8CF714D85EA1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A26771B4-77FB-456F-9A21-98F7F60FA57D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A26771B4-77FB-456F-9A21-98F7F60FA57D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A26771B4-77FB-456F-9A21-98F7F60FA57D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A26771B4-77FB-456F-9A21-98F7F60FA57D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90F57332-2B7F-47D0-8A41-436447F9337F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90F57332-2B7F-47D0-8A41-436447F9337F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90F57332-2B7F-47D0-8A41-436447F9337F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90F57332-2B7F-47D0-8A41-436447F9337F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
