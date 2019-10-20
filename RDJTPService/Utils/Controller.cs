@@ -1,5 +1,8 @@
-﻿using RDJTP.Core;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RDJTP.Core;
 using RDJTP.Core.Extensions;
+using System;
 using System.Text.RegularExpressions;
 using static RDJTP.Core.RequestMethodDefinitions;
 using static RDJTP.Core.ResponseStatusDefinitions;
@@ -43,7 +46,7 @@ namespace RDJTPService.Utils
 
                 case UPDATE:
 
-                    if (!request.IsReourceGiven() || !request.IsDateGiven() || !request.IsBodyGiven() || !request.IsDateUnix())
+                    if (!request.IsReourceGiven() || !request.IsDateGiven() || !request.IsBodyGiven() || !request.IsDateUnix() || !request.IsBodyJson())
                         response.AddReasonPhrase(BADREQUEST_STATUS);
 
                     if (!request.IsReourceGiven())
@@ -57,6 +60,10 @@ namespace RDJTPService.Utils
 
                     if (!request.IsDateUnix())
                         response.AddReasonPhrase(ILLEGAL_DATE);
+
+                    if (!request.IsBodyJson())
+                        response.AddReasonPhrase(ILLEGAL_BODY);
+
                     break;
 
                 case DELETE:
@@ -150,6 +157,21 @@ namespace RDJTPService.Utils
             }
 
             return isGiven;
+        }
+
+        public static bool IsBodyJson(this Request request)
+        {
+            bool isJson = false;
+
+            try
+            {
+                var obj = JToken.Parse(request.Body);
+                return !isJson;
+            }
+            catch (Exception)
+            {
+                return isJson;
+            }
         }
     }
 }
