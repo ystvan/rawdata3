@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace RDJTP.Core
 {
@@ -9,6 +8,6 @@ namespace RDJTP.Core
         public string Status { get; set; } = string.Empty;
 
         [JsonPropertyName("body")]
-        public string Body { get; set; } = string.Empty;
+        public string Body { get; set; } 
     }
 }
