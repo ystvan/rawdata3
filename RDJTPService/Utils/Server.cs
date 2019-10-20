@@ -50,7 +50,7 @@ namespace RDJTPService
                     var request = msg.FromJson<Request>();
                     var response = new Response();
 
-                    request.ValidateRequestAndAddResponse(response);
+                    request.ValidateRequest_AppendResponse(response);
 
                     buffer = Encoding.UTF8.GetBytes(response.ToJson());
                     stream.Write(buffer, 0, buffer.Length);
