@@ -30,13 +30,13 @@ namespace RDJTP.Core.Extensions
             }
         }
 
-        public static bool GetCategoryIdFromPathIfExist(this string fullPath, out int id) 
+        public static bool GetCategoryIdFromPathIfExist(this string fullPath, out int id)
         {
             string[] elements = fullPath.Split("/api/categories/");
 
             bool isThereAnId = int.TryParse(elements[1], out id);
 
-            return isThereAnId;              
+            return isThereAnId;
         }
 
         public static IEnumerable<string> SplitInParts(this string s, int partLength)
