@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Assignment3.Core\RDJTP.Core\RDJTP.Core.csproj" />
+  </ItemGroup>
+
 </Project>
