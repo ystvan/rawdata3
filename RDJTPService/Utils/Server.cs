@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using static RDJTP.Core.ResponseStatusDefinitions;
+
 
 namespace RDJTPService
 {
@@ -33,63 +33,53 @@ namespace RDJTPService
 
         private static void HandleTcpClient(TcpClient client)
         {
-            var stream = client.GetStream();
-            var buffer = new byte[client.ReceiveBufferSize];
-            var array = stream.Read(buffer, 0, buffer.Length);
-            var msg = Encoding.UTF8.GetString(buffer, 0, array);
-#if DEBUG
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"\t {msg} \n");
-            Console.ForegroundColor = ConsoleColor.Red;
-#endif
-            if (!string.IsNullOrEmpty(msg))
+            try
             {
-                var request = msg.FromJson<Request>();
-                var response = new Response();
-
-                switch (request.Method)
+                var stream = client.GetStream();
+                var buffer = new byte[client.ReceiveBufferSize];
+                var array = stream.Read(buffer, 0, buffer.Length);
+                var msg = Encoding.UTF8.GetString(buffer, 0, array);
+#if DEBUG
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"\t {msg} \n");
+                Console.ForegroundColor = ConsoleColor.Red;
+#endif
+                if (!string.IsNullOrEmpty(msg))
                 {
-                    case "create":
-                        break;
-                    case "read":
-                        break;
-                    case "update":
-                        break;
-                    case "delete":
-                        break;
-                    case "echo":
-                        break;
-                    case null:
-                        response.AddReasonPhrase(BADREQUEST_STATUS, MISSING_METHOD);
-                        break;
-                    default:
-                        response.AddReasonPhrase(BADREQUEST_STATUS, ILLEGAL_METHOD);
-                        break;
+                    var request = msg.FromJson<Request>();
+                    var response = new Response();
+                    
+                    request.ValidateRequestAndAddResponse(response);                    
+                           
+                    buffer = Encoding.UTF8.GetBytes(response.ToJson());
+                    stream.Write(buffer, 0, buffer.Length);
+
+                    stream.Close();
                 }
-
-                buffer = Encoding.UTF8.GetBytes(response.ToJson());
-                stream.Write(buffer, 0, buffer.Length);
-
-                stream.Close();
+            }
+            catch (Exception exc)
+            {
+                // swallow and keep running
+                Console.WriteLine($"Error: {exc.GetType()}\n{exc.Message}");
             }
         }
 
-            private TcpListener GetRDJTPServer()
-            {
-                var server = new TcpListener(IPAddress.Loopback, portNumber);
-                return server;
-            }
+        private TcpListener GetRDJTPServer()
+        {
+            var server = new TcpListener(IPAddress.Loopback, portNumber);
+            return server;
+        }
 
-            private List<Category> GetCategories()
-            {
-                var categories = new List<Category>
+        private List<Category> GetCategories()
+        {
+            var categories = new List<Category>
                 {
                     new Category { Id = 1, Name = "Beverages" },
                     new Category { Id = 2, Name = "Condiments" },
                     new Category { Id = 3, Name = "Confections" },
                 };
 
-                return categories;
-            }
+            return categories;
         }
     }
+}

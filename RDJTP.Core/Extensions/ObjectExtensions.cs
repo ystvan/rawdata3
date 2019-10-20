@@ -1,10 +1,36 @@
 ﻿using System;
 using System.Text.Json;
+using static RDJTP.Core.RequestMethodDefinitions;
+using static RDJTP.Core.ResponseStatusDefinitions;
 
 namespace RDJTP.Core.Extensions
 {
     public static class ObjectExtensions
     {
+        public static void ValidateRequestAndAddResponse(this Request request, Response response) 
+        {
+            request.LowerRequestMethod();
+
+            switch (request.Method)
+            {
+                case CREATE:
+                    break;
+                case READ:
+                    break;
+                case UPDATE:
+                    break;
+                case DELETE:
+                    break;
+                case ECHO:
+                    break;
+                case null:
+                    response.AddReasonPhrase(BADREQUEST_STATUS, MISSING_METHOD);
+                    break;
+                default:
+                    response.AddReasonPhrase(BADREQUEST_STATUS, ILLEGAL_METHOD);
+                    break;
+            }             
+        }
 
         public static void AddReasonPhrase(this Response response, params string[] reasons) 
         {
@@ -12,6 +38,11 @@ namespace RDJTP.Core.Extensions
             {
                 response.Status += item;
             }
+        }
+
+        public static void LowerRequestMethod(this Request request) 
+        {
+            request.Method?.ToLower();        
         }
 
         /// <summary>
