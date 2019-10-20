@@ -1,16 +1,18 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using RDJTP.Core;
 using RDJTP.Core.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using static RDJTP.Core.RequestMethodDefinitions;
 using static RDJTP.Core.ResponseStatusDefinitions;
 
 namespace RDJTPService.Utils
 {
-    public static class Controller
+    public static class API
     {
+        private static int Id = 0;
+
         public static void ValidateRequest_AppendResponse(this Request request, Response response)
         {
             request.LowerRequestMethod();
@@ -42,6 +44,18 @@ namespace RDJTPService.Utils
 
                     if (!request.IsDateGiven())
                         response.AddReasonPhrase(MISSING_DATE);
+
+                    try
+                    {
+                        if (!request.Path.GetCategoryIdFromPathIfExist(out Id))
+                            response.AddReasonPhrase(BADREQUEST_STATUS);
+                            
+                    }
+                    catch (Exception)
+                    {
+                        response.AddReasonPhrase(BADREQUEST_STATUS);
+                    }
+                    
                     break;
 
                 case UPDATE:
@@ -84,7 +98,13 @@ namespace RDJTPService.Utils
                         response.AddReasonPhrase(BADREQUEST_STATUS);
 
                     if (!request.IsBodyGiven())
+                    {
                         response.AddReasonPhrase(MISSING_BODY);
+                    }
+                    else
+                    {
+                        response.Body = request.Body;
+                    }
 
                     if (!request.IsDateGiven())
                         response.AddReasonPhrase(MISSING_DATE);
@@ -147,7 +167,7 @@ namespace RDJTPService.Utils
 
         public static bool IsDateUnix(this Request request)
         {
-            Regex numericRegEx = new Regex("^(0|[1-9][0-9]*)$"); 
+            Regex numericRegEx = new Regex("^(0|[1-9][0-9]*)$");
 
             bool isGiven = false;
 
@@ -172,6 +192,18 @@ namespace RDJTPService.Utils
             {
                 return isJson;
             }
+        }
+
+        private static List<Category> GetCategories()
+        {
+            var categories = new List<Category>
+            {
+                new Category { Id = 1, Name = "Beverages" },
+                new Category { Id = 2, Name = "Condiments" },
+                new Category { Id = 3, Name = "Confections" },
+            };
+
+            return categories;
         }
     }
 }
