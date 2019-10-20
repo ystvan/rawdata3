@@ -42,7 +42,7 @@ namespace RDJTPService
             Console.WriteLine($"\t {msg} \n");
             Console.ForegroundColor = ConsoleColor.Red;
 #endif
-            if (string.IsNullOrEmpty(msg))
+            if (!string.IsNullOrEmpty(msg))
             {
                 var request = msg.FromJson<Request>();
                 var response = new Response();
@@ -59,18 +59,19 @@ namespace RDJTPService
                         break;
                     case "echo":
                         break;
+                    case null:
+                        response.AddReasonPhrase(BADREQUEST_STATUS, MISSING_METHOD);
+                        break;
                     default:
-                        response.AddReasonPhrase(BADREQUEST_STATUS_CODE, BADREQUEST_REASON_PHRASE, "illegal method");
+                        response.AddReasonPhrase(BADREQUEST_STATUS, ILLEGAL_METHOD);
                         break;
                 }
-                stream.Close();
-            }
-            else
-            {
-                buffer = Encoding.UTF8.GetBytes($"missing method");
+
+                buffer = Encoding.UTF8.GetBytes(response.ToJson());
                 stream.Write(buffer, 0, buffer.Length);
+
                 stream.Close();
-            }
+            }           
         }
 
         private TcpListener GetRDJTPServer()

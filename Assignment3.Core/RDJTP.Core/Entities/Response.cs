@@ -6,9 +6,9 @@ namespace RDJTP.Core
     public class Response
     {
         [JsonPropertyName("status")]
-        public List<string> Status { get; set; }
+        public string Status { get; set; } = string.Empty;
 
         [JsonPropertyName("body")]
-        public string Body { get; set; }
+        public string Body { get; set; } = string.Empty;
     }
 }

@@ -10,7 +10,7 @@ namespace RDJTP.Core.Extensions
         {
             foreach (var item in reasons)
             {
-                response.Status.Add(item);
+                response.Status += item;
             }
         }
 
