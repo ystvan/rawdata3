@@ -49,9 +49,9 @@ namespace RDJTPService
                 {
                     var request = msg.FromJson<Request>();
                     var response = new Response();
-                    
-                    request.ValidateRequestAndAddResponse(response);                    
-                           
+
+                    request.ValidateRequestAndAddResponse(response);
+
                     buffer = Encoding.UTF8.GetBytes(response.ToJson());
                     stream.Write(buffer, 0, buffer.Length);
 
@@ -74,11 +74,11 @@ namespace RDJTPService
         private List<Category> GetCategories()
         {
             var categories = new List<Category>
-                {
-                    new Category { Id = 1, Name = "Beverages" },
-                    new Category { Id = 2, Name = "Condiments" },
-                    new Category { Id = 3, Name = "Confections" },
-                };
+            {
+                new Category { Id = 1, Name = "Beverages" },
+                new Category { Id = 2, Name = "Condiments" },
+                new Category { Id = 3, Name = "Confections" },
+            };
 
             return categories;
         }

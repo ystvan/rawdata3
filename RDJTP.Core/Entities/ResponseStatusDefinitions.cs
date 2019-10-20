@@ -11,10 +11,10 @@
         public const string ERROR_STATUS =      "6 Error ";
 
         // Missing reasons phrases with elements
-        public const string MISSING_DATE =   "missing date ";
-        public const string MISSING_BODY =   "missing body ";
-        public const string MISSING_METHOD = "missing method ";
-        public const string MISSING_PATH =   "missing path ";
+        public const string MISSING_DATE =       "missing date ";
+        public const string MISSING_BODY =       "missing body ";
+        public const string MISSING_METHOD =     "missing method ";
+        public const string MISSING_RESOURCE =   "missing resource ";
 
         // Illegal reasons phrases with elements
         public const string ILLEGAL_DATE =   "illegal date ";
