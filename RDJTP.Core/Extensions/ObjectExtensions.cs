@@ -5,10 +5,10 @@ using System.Text.Json;
 namespace RDJTP.Core.Extensions
 {
     public static class ObjectExtensions
-    {    
-        public static void LowerRequestMethod(this Request request) 
+    {
+        public static void LowerRequestMethod(this Request request)
         {
-            request.Method?.ToLower();        
+            request.Method?.ToLower();
         }
 
         /// <summary>
