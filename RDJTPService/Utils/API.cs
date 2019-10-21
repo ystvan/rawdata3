@@ -103,6 +103,33 @@ namespace RDJTPService.Utils
                     if (!request.IsBodyJson())
                         response.AddReasonPhrase(ILLEGAL_BODY);
 
+                    try
+                    {
+                        if (!request.Path.GetCategoryIdFromPathIfExist(out Id))
+                        {
+                            response.AddReasonPhrase(BADREQUEST_STATUS);
+                        }
+                        else if (Id != 0)
+                        {
+                            var categories = GetCategories();
+                            var requestedCategory = categories.FirstOrDefault(c => c.Id == Id);
+                            if (requestedCategory != null)
+                            {
+                                requestedCategory.Name = request.Body.FromJson<Category>().Name;
+                                response.AddReasonPhrase(UPDATED_STATUS);
+                            }
+                            else
+                            {
+                                response.AddReasonPhrase(NOTFOUND_STATUS);
+                            }
+
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        response.AddReasonPhrase(BADREQUEST_STATUS);
+                    }
+
                     break;
 
                 case DELETE:
