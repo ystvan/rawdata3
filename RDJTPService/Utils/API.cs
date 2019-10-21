@@ -33,6 +33,31 @@ namespace RDJTPService.Utils
 
                     if (!request.IsBodyGiven())
                         response.AddReasonPhrase(MISSING_BODY);
+
+                    try
+                    {
+                        if (request.Path.ToLower() == "/api/categories")
+                        {
+                            var categoryForCreation = request.Body.FromJson<Category>();
+                            CreateCategory(categoryForCreation);
+
+                            var categories = GetCategories();
+                            var match = categories.FirstOrDefault(c => c.Name.ToLower() == categoryForCreation.Name.ToLower());
+
+                            response.Body = match.ToJson();
+                            response.AddReasonPhrase(CREATED_STATUS);
+                            break;
+                        }
+                        else
+                        {
+                            response.AddReasonPhrase(BADREQUEST_STATUS);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        response.AddReasonPhrase(BADREQUEST_STATUS);
+                    }
+
                     break;
 
                 case READ:
@@ -255,5 +280,28 @@ namespace RDJTPService.Utils
         {
             return Server.categories;
         }
+
+        private static void CreateCategory(Category category)
+        {
+            Server.categories.Add(new Category { Id = 4, Name = category.Name});            
+        }
+
+        private static bool DeleteCategory(int categoryId)
+        {
+            bool success = true;
+
+            var match = Server.categories.FirstOrDefault(c => c.Id == categoryId);
+            if (match != null)
+            {
+                Server.categories.Remove(match);
+                return success;
+            }
+            else
+            {
+                return !success;
+            }
+        }
+
+
     }
 }
