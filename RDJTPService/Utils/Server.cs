@@ -15,6 +15,18 @@ namespace RDJTPService
     {
         private const int portNumber = 5000;
 
+        public static List<Category> categories { get; set; }
+
+        public Server()
+        {
+            categories = new List<Category>
+            {
+                new Category { Id = 1, Name = "Beverages" },
+                new Category { Id = 2, Name = "Condiments" },
+                new Category { Id = 3, Name = "Confections" },
+            };
+        }
+
         public void Start()
         {
             var server = GetRDJTPServer();
@@ -69,6 +81,6 @@ namespace RDJTPService
         {
             var server = new TcpListener(IPAddress.Loopback, portNumber);
             return server;
-        }       
+        }
     }
 }
