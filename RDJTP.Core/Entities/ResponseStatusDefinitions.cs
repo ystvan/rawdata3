@@ -21,6 +21,5 @@
         public const string ILLEGAL_BODY =   "illegal body";
         public const string ILLEGAL_PATH =   "illegal path";
         public const string ILLEGAL_METHOD = "illegal method";
-
     }
 }
