@@ -167,6 +167,37 @@ namespace RDJTPService.Utils
 
                     if (!request.IsDateGiven())
                         response.AddReasonPhrase(MISSING_DATE);
+
+                    try
+                    {
+                        if (!request.Path.GetCategoryIdFromPathIfExist(out Id))
+                        {
+                            response.AddReasonPhrase(BADREQUEST_STATUS);
+                        }
+                        else if (Id != 0) 
+                        {
+                            var categories = GetCategories();
+                            var requestedCategory = categories.FirstOrDefault(c => c.Id == Id);
+                            if (requestedCategory != null)
+                            {
+                                if (DeleteCategory(requestedCategory.Id))
+                                {
+                                    response.AddReasonPhrase(OK_STATUS);
+                                }
+
+                                response.AddReasonPhrase(NOTFOUND_STATUS);
+                            }
+                            else
+                            {
+                                response.AddReasonPhrase(NOTFOUND_STATUS);
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        response.AddReasonPhrase(BADREQUEST_STATUS);
+                    }
+
                     break;
 
                 case ECHO:
@@ -301,7 +332,5 @@ namespace RDJTPService.Utils
                 return !success;
             }
         }
-
-
     }
 }
