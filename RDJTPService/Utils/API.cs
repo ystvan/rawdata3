@@ -3,6 +3,7 @@ using RDJTP.Core;
 using RDJTP.Core.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using static RDJTP.Core.RequestMethodDefinitions;
 using static RDJTP.Core.ResponseStatusDefinitions;
@@ -47,9 +48,33 @@ namespace RDJTPService.Utils
 
                     try
                     {
+                        if (request.Path.ToLower() == "/api/categories")
+                        {
+                            var categories = GetCategories();
+                            response.AddBody(categories.ToJson());
+                            response.AddReasonPhrase(OK_STATUS);
+                            break;
+                        }
+
                         if (!request.Path.GetCategoryIdFromPathIfExist(out Id))
+                        {
                             response.AddReasonPhrase(BADREQUEST_STATUS);
+                        }
+                        else if (Id != 0)
+                        {
+                            var categories = GetCategories();
+                            var requestedCategory = categories.FirstOrDefault(c => c.Id == Id);
+                            if (requestedCategory != null)
+                            {
+                                response.AddReasonPhrase(OK_STATUS);
+                                response.AddBody(requestedCategory.ToJson());
+                            }
+                            else
+                            {
+                                response.AddReasonPhrase(NOTFOUND_STATUS);
+                            }
                             
+                        }
                     }
                     catch (Exception)
                     {
@@ -127,6 +152,11 @@ namespace RDJTPService.Utils
             {
                 response.Status += item;
             }
+        }
+
+        public static void AddBody(this Response response, string body)
+        {
+            response.Body = body;
         }
 
         public static bool IsReourceGiven(this Request request)
